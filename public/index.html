@@ -1,0 +1,61 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div id="amazon-root"></div>
+        <script type="text/javascript">
+            window.onAmazonLoginReady = function() {
+                amazon.Login.setClientId('amzn1.application-oa2-client.b37e161d1c4d457ebacc44d9dcd00ad8');
+            };
+            (function(d) {
+            var a = d.createElement('script'); a.type = 'text/javascript';
+            a.async = true; a.id = 'amazon-login-sdk';
+            a.src = 'https://assets.loginwithamazon.com/sdk/na/login1.js';
+            d.getElementById('amazon-root').appendChild(a);
+            })(document);
+        </script>
+        <h2>OAuth2 Demo with Amazon</h2>
+        <a href id="LoginWithAmazon">
+            <img border="0" alt="Login with Amazon"
+                src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"
+                width="156" height="32" />
+         </a>
+
+         <script type="text/javascript">
+            document.getElementById('LoginWithAmazon').onclick = function() {
+                options = {}
+                options.scope = 'profile';
+                options.interactive = 'always'; //default is 'auto' ('always' means popup will come always and won't use cached data)
+                options.popup = true; //default is true
+                
+                //default is 'implicit'. If implicit, we get the access_token directly
+                //If we use code as below, we should use the code to get the access_token by making another call.
+                //It will be done in the server side
+                options.response_type = 'code'; 
+                options.scope_data = {
+                    'profile' : {'essential': false} 
+                };
+                amazon.Login.authorize(options,
+                    'https://ba136f528fcf.ngrok.io/handle_callback');
+                return false;
+            };
+        </script>
+        <br/>
+        <br/>
+         <div>
+            References for the client side code:
+            <ul>
+                <li><a href="https://developer.amazon.com/docs/login-with-amazon/register-web.html" target="_blank">https://developer.amazon.com/docs/login-with-amazon/register-web.html</a></li>
+                <li><a href="https://developer.amazon.com/docs/login-with-amazon/add-a-button-web.html" target="_blank">https://developer.amazon.com/docs/login-with-amazon/add-a-button-web.html</a></li>
+                <li><a href="https://developer.amazon.com/docs/login-with-amazon/install-sdk-javascript.html" target="_blank">https://developer.amazon.com/docs/login-with-amazon/install-sdk-javascript.html</a></li>
+            </ul>
+
+            References for the server side code:
+            <ul>
+                <li><a href="https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html" target="_blank">https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html</a></li>
+                <li><a href="https://developer.amazon.com/docs/login-with-amazon/obtain-customer-profile.html" target="_blank">https://developer.amazon.com/docs/login-with-amazon/obtain-customer-profile.html</a></li>
+            </ul>
+        </div>
+    </body>
+</html>
